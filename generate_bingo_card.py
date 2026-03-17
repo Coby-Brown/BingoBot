@@ -1013,6 +1013,11 @@ def build_web_card_html(
         let desiredRoomPassword = '';
         let joinedRoomId = null;
 
+        const cells = Array.from(board.querySelectorAll('.cell'));
+        for (let index = 0; index < cells.length; index += 1) {{
+            cells[index].dataset.cellIndex = String(index);
+        }}
+
         function setConnectionStatus(message, variant) {{
             connectionStatus.classList.remove('connected', 'offline');
             connectionStatus.classList.add(variant);
@@ -1315,6 +1320,19 @@ def build_web_card_html(
             socket.emit('state_update', {{ room: joinedRoomId, state: collectState() }});
         }}
 
+        function emitCellUpdate(cellIndex, markedBy) {{
+            if (applyingRemoteState || !socket || !socket.connected || !joinedRoomId) {{
+                return;
+            }}
+            const state = collectState();
+            socket.emit('cell_update', {{
+                room: joinedRoomId,
+                cell_index: cellIndex,
+                marked_by: markedBy,
+                players: state.players,
+            }});
+        }}
+
         function applyRemoteState(state) {{
             applyingRemoteState = true;
             try {{
@@ -1461,19 +1479,26 @@ def build_web_card_html(
             if (!cell) return;
             if (!activePlayerId) return;
 
+            const cellIndex = Number.parseInt(cell.dataset.cellIndex || '', 10);
+            if (Number.isNaN(cellIndex)) return;
+
             if (cell.dataset.markedBy === activePlayerId) {{
                 clearCellMark(cell);
+                emitCellUpdate(cellIndex, null);
             }} else {{
                 markCellForPlayer(cell, activePlayerId);
+                emitCellUpdate(cellIndex, activePlayerId);
             }}
-            broadcastState();
         }});
 
         clearButton.addEventListener('click', () => {{
             for (const cell of board.querySelectorAll('.cell[data-marked-by]')) {{
+                const cellIndex = Number.parseInt(cell.dataset.cellIndex || '', 10);
                 clearCellMark(cell);
+                if (!Number.isNaN(cellIndex)) {{
+                    emitCellUpdate(cellIndex, null);
+                }}
             }}
-            broadcastState();
         }});
 
         createPlayer('Player 1', starterColors[0], false, null);
