@@ -1,3 +1,5 @@
+NOTE: This project was a very fast project made almost exclusevly using AI for some twitch streams.
+
 Exact environment bootstrap:
 
 ./start.sh
@@ -8,7 +10,7 @@ If Python 3.13.3 is not auto-detected on a machine, run `PYTHON_BIN=/path/to/pyt
 Manual setup:
 
 pyenv shell 3.13.3
-python -m pip install -r requirement.txt
+python -m pip install -r requirements.txt
 python generate_bingo_card.py --output my-bingo-card.png
 
 Run it from the BingoBot folder with this command:
