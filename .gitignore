@@ -6,5 +6,6 @@
 /__pycache__
 /generated-bingo-card.html
 /my-bingo-card.png
-/requirements.txt
 /stream-card.png
+/Tokens
+.gitignore
