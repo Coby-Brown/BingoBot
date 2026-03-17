@@ -1,0 +1,90 @@
+Craft a stone pickaxe
+Craft a furnace
+Craft a crafting table
+Craft a chest
+Craft 16 torchs
+Sleep
+Go Sailing
+Block an Attack
+Go Fishing
+Craft shears
+Craft an iron sword
+Smelt 16 iron ingots
+Cook a piece of food
+Mine 16 coal ore
+Mine 32 cobblestone
+Harvest 5 wheat
+Collect 32 logs
+Collect 64 dirt
+Collect 32 sand
+Collect 32 gravel
+Tame a wolf
+Tame a cat
+Breed 4 cows
+Breed 4 sheep
+Breed 4 pigs
+Shear a sheep
+Dye wool any color
+Use a campfire to cook food
+Trade with a villager
+Ring a village bell
+Milk a cow
+Find a lava pool
+Climb to Y level 100 or higher
+Craft a bucket
+Fill a bucket with water
+Fill a bucket with lava
+Collect 16 apples
+Collect 16 feathers
+Collect 16 leather
+Collect 32 sugar cane
+Craft a smoker
+Craft a composter
+Craft a barrel
+Plant potted plants
+Craft a painting
+Shoot a mob
+Smelt 32 glass
+Harvest 32 carrots
+Cook 32 potatoes
+Grow a tree from a sapling
+Kill 10 zombies
+Kill 10 skeletons
+Kill 10 spiders
+Tame a horse
+Visit a desert biome
+Visit a snowy biome
+Visit a swamp biome
+Find a ruined portal
+Find a shipwreck
+Enter the nether
+Find Buried Treasure
+Visit a jungle biome
+Visit a savanna biome
+Visit a taiga biome
+Visit a plains biome
+Visit a beach biome
+Visit a river biome
+Visit a mountain biome
+Loot a pillager outpost
+Find a mineshaft
+Loot a dungeon spawner
+Loot an igloo
+Loot a desert temple
+Loot a jungle temple
+Find a witch hut
+Find a geode
+Find dripstone cave
+Find lush cave
+Loot an ocean ruin
+Collect a map from a cartographer
+Use a map
+Kill 10 creepers
+Kill 10 drowned
+Kill 10 husks
+Kill 10 strays
+Kill 5 endermen
+Kill 10 slimes
+Kill 10 phantoms
+Kill 5 witches
+Survive one full night outside
