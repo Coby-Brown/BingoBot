@@ -1,0 +1,68 @@
+Exact environment bootstrap:
+
+./start.sh
+
+The setup script recreates the project's local `.venv` with the exact package versions currently in use and verifies the Python files compile.
+If Python 3.13.3 is not auto-detected on a machine, run `PYTHON_BIN=/path/to/python3.13 ./start.sh`.
+
+Manual setup:
+
+pyenv shell 3.13.3
+python -m pip install -r requirements.txt
+python generate_bingo_card.py --output my-bingo-card.png
+
+Run it from the BingoBot folder with this command:
+
+python generate_bingo_card.py --output my-bingo-card.png
+
+The script now creates two files by default:
+
+- PNG card image (for sharing or archiving)
+- Interactive HTML card that opens in your browser
+
+In the web card, there is a Players sidebar on the left.
+It starts with one permanent editable player (name + color), and you can add more players.
+Select an active player, then click squares to shade them using that player's color. Click again to unmark.
+
+By default, the center tile is a traditional free middle space.
+Use --no-free-center if you want the center tile filled from your challenge lists.
+
+If the output file already exists, the script moves the old image into the Old Generations folder before saving the new one.
+
+The bot now mixes entries from Challenge.txt and Hard-Challenge.txt. It picks a random valid number of hard challenges and places them so every row, column, and diagonal bingo contains at least 1 hard challenge and no more than 2.
+
+Optional flags:
+
+--seed 42 for repeatable output
+--template Bingo-Card-Template.jpg to use a different template
+--challenges Challenge.txt to use a different list
+--hard-challenges Hard-Challenge.txt to use a different hard challenge list
+--padding 18 to adjust spacing inside each square
+--archive-dir "Old Generations" to change where old images are stored
+--web-output generated-bingo-card.html to change the interactive web card file name
+--no-open-browser to generate the HTML file without automatically opening it
+--free-center to use a free middle tile (default)
+--no-free-center to force a list-generated center tile
+
+Realtime hosting for other players:
+
+1. Generate the card HTML:
+python generate_bingo_card.py --output my-bingo-card.png --web-output generated-bingo-card.html --no-open-browser
+
+2. Start the multiplayer server:
+python realtime_server.py --web-card generated-bingo-card.html --host 0.0.0.0 --port 8000
+
+3. Share the link with players on your network:
+http://YOUR-IP:8000/
+
+Optional: use rooms in the URL query string so multiple games can run on one server:
+http://YOUR-IP:8000/?room=my-game-night
+
+When one player edits names/colors or marks/unmarks squares, everyone in the same room sees updates in real time.
+
+Password-protected rooms:
+
+- Enter a room name and password in the page, then click Join Room.
+- The first successful join sets that room's password for the life of the server process.
+- Other players must join the same room name with the same password.
+- Copy Room Link copies only the room URL. Share the password separately.
