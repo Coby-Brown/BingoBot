@@ -79,9 +79,9 @@ def merge_state(
     """Merge updates so concurrent clicks do not clobber each other.
 
     Rules:
-    - Merge players by id (incoming metadata wins).
+    - Treat incoming players as authoritative (allows removals to propagate).
     - For marks, accept all non-null incoming marks.
-    - For clears (incoming null), only clear if the mark owner is present in
+    - For clears (incoming null), only clear if the mark owner is absent from
       the incoming player list.
     """
     if existing_state is None:
@@ -98,22 +98,23 @@ def merge_state(
                 if isinstance(player, dict) and "id" in player:
                     incoming_player_ids.add(player["id"])
 
-    # Merge player list by ID.
+    # Incoming snapshots are authoritative for the player list.
     if "players" in incoming_state:
-        existing_players = existing_state.get("players", [])
         incoming_players = incoming_state.get("players", [])
 
-        if isinstance(existing_players, list) and isinstance(incoming_players, list):
-            players_by_id = {}
-            for player in existing_players:
-                if isinstance(player, dict) and "id" in player:
-                    players_by_id[player["id"]] = player
-
+        if isinstance(incoming_players, list):
+            merged_players = []
+            seen_ids = set()
             for player in incoming_players:
-                if isinstance(player, dict) and "id" in player:
-                    players_by_id[player["id"]] = player
+                if not isinstance(player, dict):
+                    continue
+                player_id = player.get("id")
+                if not isinstance(player_id, str) or player_id in seen_ids:
+                    continue
+                seen_ids.add(player_id)
+                merged_players.append(player)
 
-            merged["players"] = [players_by_id[pid] for pid in sorted(players_by_id.keys())]
+            merged["players"] = merged_players
 
     # Merge marks without letting stale snapshots erase concurrent marks.
     if "marks" in incoming_state and "marks" in existing_state:
@@ -130,7 +131,7 @@ def merge_state(
                     if incoming_mark is not None:
                         merged_marks[i] = incoming_mark
                     elif existing_mark is not None:
-                        if existing_mark in incoming_player_ids:
+                        if existing_mark not in incoming_player_ids:
                             merged_marks[i] = None
 
             merged["marks"] = merged_marks

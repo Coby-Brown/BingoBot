@@ -1179,6 +1179,13 @@ def build_web_card_html(
             nameInput.addEventListener('input', () => {{
                 const nextName = nameInput.value.trim() || 'Player';
                 updateMarkedCellTitles(playerId, nextName);
+            }});
+
+            nameInput.addEventListener('change', () => {{
+                broadcastState();
+            }});
+
+            nameInput.addEventListener('blur', () => {{
                 broadcastState();
             }});
 
